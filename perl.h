@@ -23,11 +23,6 @@
 #define VOIDUSED 1
 #include "config.h"
 
-#ifndef BCOPY
-#   define bcopy(s1,s2,l) memcpy(s2,s1,l);
-#   define bzero(s,l) memset(s,0,l);
-#endif
-
 #include <stdio.h>
 #include <ctype.h>
 #include <setjmp.h>
@@ -60,12 +55,6 @@ typedef struct htbl HASH;
 #include "cmd.h"
 #include "array.h"
 #include "hash.h"
-
-#ifdef CHARSPRINTF
-    char *sprintf();
-#else
-    int sprintf();
-#endif
 
 /* A string is TRUE if not "" or "0". */
 #define True(val) (tmps = (val), (*tmps && !(*tmps == '0' && !tmps[1])))

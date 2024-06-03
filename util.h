@@ -34,3 +34,5 @@ void	notincl();
 char	*getval();
 void	growstr();
 void	setdef();
+void fatal(char *, ...);
+

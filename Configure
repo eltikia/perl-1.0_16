@@ -317,7 +317,7 @@ spackage=''
 prefix=''
 prefixexp=''
 prototype=''
-sh=''
+sh='/bin/bash'
 so=''
 sharpbang=''
 shsharp=''
@@ -2750,7 +2750,7 @@ echo " "
 rp="Any additional libraries?"
 . ./myread
 case "$ans" in
-none) libs=' ';;
+none) libs=' -lcrypt';;
 *) libs="$ans";;
 esac
 

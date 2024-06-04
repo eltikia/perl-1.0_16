@@ -10,6 +10,7 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "handy.h"
 #include "EXTERN.h"
@@ -202,18 +203,20 @@ int newlen;
 }
 
 /*VARARGS1*/
-fatal(pat,a1,a2,a3,a4)
-char *pat;
+void fatal(char *pat, ...)
 {
     extern FILE *e_fp;
     extern char *e_tmpname;
+    va_list argptr;
 
+    va_start(argptr, pat);
+    vsprintf(tokenbuf, pat, argptr);
+    va_end(argptr);
     if (in_eval) {
-	sprintf(tokenbuf,pat,a1,a2,a3,a4);
 	str_set(stabent("@",TRUE)->stab_val,tokenbuf);
 	longjmp(eval_env,1);
     }
-    fprintf(stderr,pat,a1,a2,a3,a4);
+    fprintf(stderr, "%s", tokenbuf);
     if (e_fp)
 	UNLINK(e_tmpname);
     exit(1);

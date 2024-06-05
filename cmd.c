@@ -9,6 +9,7 @@
  * 
  */
 
+#include <stdarg.h>
 #include "handy.h"
 #include "EXTERN.h"
 #include "search.h"
@@ -435,14 +436,16 @@ until_loop:
 
 #ifdef DEBUGGING
 /*VARARGS1*/
-deb(pat,a1,a2,a3,a4,a5,a6,a7,a8)
-char *pat;
+void deb(char *pat, ...)
 {
     register int i;
+    va_list argptr;
 
+    va_start(argptr, pat);
     for (i=0; i<dlevel; i++)
 	fprintf(stderr,"%c%c ",debname[i],debdelim[i]);
-    fprintf(stderr,pat,a1,a2,a3,a4,a5,a6,a7,a8);
+    vfprintf(stderr, pat, argptr);
+    va_end(argptr);
 }
 #endif
 

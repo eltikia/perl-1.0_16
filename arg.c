@@ -24,7 +24,9 @@
  * 
  */
 
+#include <stdlib.h>
 #include <signal.h>
+#include <string.h>
 #include "handy.h"
 #include "EXTERN.h"
 #include "search.h"

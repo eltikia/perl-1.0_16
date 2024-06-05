@@ -15,6 +15,9 @@ char rcsid[] = "$Header: perly.c,v 1.0.1.3 88/01/28 10:28:31 root Exp $";
  * 
  */
 
+#include <stdlib.h>
+#include <string.h>
+
 bool preprocess = FALSE;
 bool assume_n = FALSE;
 bool assume_p = FALSE;

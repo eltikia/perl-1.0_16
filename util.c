@@ -10,7 +10,9 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 
 #include "handy.h"
 #include "EXTERN.h"
@@ -33,7 +35,7 @@ safemalloc(size)
 MEM_SIZE size;
 {
     char *ptr;
-    char *malloc();
+    void *malloc();
 
     ptr = malloc(size?size:1);	/* malloc(0) is NASTY on our system */
 #ifdef DEBUGGING
@@ -57,7 +59,7 @@ char *where;
 MEM_SIZE size;
 {
     char *ptr;
-    char *realloc();
+    void *realloc();
 
     ptr = realloc(where,size?size:1);	/* realloc(0) is NASTY on our system */
 #ifdef DEBUGGING

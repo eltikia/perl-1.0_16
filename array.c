@@ -7,6 +7,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "EXTERN.h"
 #include "handy.h"
 #include "util.h"

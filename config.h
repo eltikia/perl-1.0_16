@@ -13,9 +13,9 @@
 /*
  * Package name      : perl
  * Source directory  : .
- * Configuration time: Wed Dec 18 15:31:08 PST 2002
- * Configured by     : schwern
- * Target system     : linux blackrider 2.4.19 #1 wed nov 13 02:17:13 est 2002 ppc 740750 gnulinux 
+ * Configuration time: Thu Jun  6 01:25:39 PM CEST 2024
+ * Configured by     : mmatiaszowski
+ * Target system     : linux kairos 6.1.0-15-amd64 #1 smp preempt_dynamic debian 6.1.66-1 (2023-12-09) x86_64 gnulinux 
  */
 
 #ifndef _config_h_
@@ -47,7 +47,7 @@
 /* SED:
  *     Your sed binary
  */
-#define SED "/bin/sed"
+#define SED "/usr/bin/sed"
 
 /* CHARSPRINTF:
  *	This symbol is defined if this system declares "char *sprintf()" in

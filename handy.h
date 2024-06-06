@@ -6,6 +6,8 @@
  * 
  */
 
+#include <string.h>
+
 #define Null(type) ((type)0)
 #define Nullch Null(char*)
 #define Nullfp Null(FILE*)

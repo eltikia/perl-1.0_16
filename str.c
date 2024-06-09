@@ -299,6 +299,7 @@ register STR *str;
     freestrroot = str;
 }
 
+int
 str_len(str)
 register STR *str;
 {

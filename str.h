@@ -33,3 +33,6 @@ double str_2num();
 STR *str_static();
 STR *str_make();
 STR *str_nmake();
+int str_len(register STR *);
+STR *str_new(int);
+

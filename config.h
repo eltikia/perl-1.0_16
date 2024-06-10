@@ -13,7 +13,7 @@
 /*
  * Package name      : perl
  * Source directory  : .
- * Configuration time: Thu Jun  6 01:25:39 PM CEST 2024
+ * Configuration time: Mon Jun 10 12:13:39 PM CEST 2024
  * Configured by     : mmatiaszowski
  * Target system     : linux kairos 6.1.0-15-amd64 #1 smp preempt_dynamic debian 6.1.66-1 (2023-12-09) x86_64 gnulinux 
  */

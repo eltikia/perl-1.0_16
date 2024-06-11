@@ -33,4 +33,5 @@ int str_len(register STR *);
 STR *str_new(int);
 void str_ncat(register STR *, register char *, register int);
 void str_scat(STR *, register STR *);
+void str_cat(register STR *, register char *);
 

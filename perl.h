@@ -204,3 +204,6 @@ double atof();
 #else
 #define UNLINK unlink
 #endif
+
+void arg_free(register ARG *);
+

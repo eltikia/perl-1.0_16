@@ -44,6 +44,11 @@ struct stio {
 #define STAB_GET(s) (tmpstab = (s), str_get(tmpstab->stab_flags & SF_VMAGIC ? stab_str(tmpstab) : tmpstab->stab_val))
 #define STAB_GNUM(s) (tmpstab = (s), str_gnum(tmpstab->stab_flags & SF_VMAGIC ? stab_str(tmpstab) : tmpstab->stab_val))
 
+/* the following macro updates any magic values this str is associated with */
+
+#define STABSET(x) if (x->str_link.str_magic) { stabset(x->str_link.str_magic,x); }
+
+
 EXT STAB *tmpstab;
 
 EXT STAB *stab_index[128];
@@ -56,3 +61,6 @@ EXT int subsvalue;
 
 STAB *aadd();
 STAB *hadd();
+
+void stabset(register STAB *, STR *);
+

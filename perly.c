@@ -2550,7 +2550,7 @@ register CMD *cmd;
 	    break;
 	case C_EXPR:
 	    if (cmd->ucmd.acmd.ac_stab)
-		arg_free(cmd->ucmd.acmd.ac_stab);
+		arg_free((ARG *)cmd->ucmd.acmd.ac_stab);
 	    if (cmd->ucmd.acmd.ac_expr)
 		arg_free(cmd->ucmd.acmd.ac_expr);
 	    break;
@@ -2563,6 +2563,7 @@ register CMD *cmd;
     }
 }
 
+void
 arg_free(arg)
 register ARG *arg;
 {

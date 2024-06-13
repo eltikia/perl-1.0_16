@@ -101,6 +101,7 @@ register STR *str;
     return str->str_nval;
 }
 
+void
 str_sset(dstr,sstr)
 STR *dstr;
 register STR *sstr;
@@ -115,6 +116,7 @@ register STR *sstr;
 	str_nset(dstr,"",0);
 }
 
+void
 str_nset(str,ptr,len)
 register STR *str;
 register char *ptr;
@@ -128,6 +130,7 @@ register int len;
     str->str_pok = 1;		/* validate pointer */
 }
 
+void
 str_set(str,ptr)
 register STR *str;
 register char *ptr;

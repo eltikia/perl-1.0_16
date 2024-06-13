@@ -79,6 +79,7 @@ MEM_SIZE size;
 
 /* safe version of free */
 
+void
 safefree(where)
 char *where;
 {

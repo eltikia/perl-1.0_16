@@ -35,4 +35,5 @@ char	*getval();
 void	growstr();
 void	setdef();
 void fatal(char *, ...);
+void safefree(char *);
 

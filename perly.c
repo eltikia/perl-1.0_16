@@ -188,8 +188,12 @@ register char **env;
     sigstab = stabent("SIG",allstabs);
 
     magicalize("!#?^~=-%0123456789.+&*(),\\/[|");
+    tmpstab = stabent("0",allstabs);
 
-    (tmpstab = stabent("0",allstabs)) && str_set(STAB_STR(tmpstab),filename);
+    if (tmpstab) {
+	str_set(STAB_STR(tmpstab),filename);
+    }
+
     (tmpstab = stabent("$",allstabs)) &&
 	str_numset(STAB_STR(tmpstab),(double)getpid());
 

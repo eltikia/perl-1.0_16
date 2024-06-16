@@ -534,6 +534,7 @@ int whence;
     return fseek(stio->fp, pos, whence) >= 0;
 }
 
+int
 do_stat(arg,sarg,retary)
 register ARG *arg;
 register STR **sarg;
@@ -590,6 +591,7 @@ STR ***retary;
     return max;
 }
 
+int
 do_tms(retary)
 STR ***retary;
 {
@@ -623,6 +625,7 @@ STR ***retary;
     return max;
 }
 
+int
 do_time(tmbuf,retary)
 struct tm *tmbuf;
 STR ***retary;

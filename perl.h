@@ -36,6 +36,7 @@
 #endif
 
 #include <sys/times.h>
+#include <unistd.h>
 
 typedef struct arg ARG;
 typedef struct cmd CMD;

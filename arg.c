@@ -870,6 +870,7 @@ register ARRAY *ary;
     return str;
 }
 
+void
 do_unshift(arg,ary)
 register ARG *arg;
 register ARRAY *ary;
@@ -893,6 +894,7 @@ register ARRAY *ary;
     safefree((char*)tmpary);
 }
 
+int
 apply(type,arg,sarg)
 int type;
 register ARG *arg;
@@ -956,7 +958,7 @@ STR **sarg;
 STR *
 do_subr(arg,sarg)
 register ARG *arg;
-register char **sarg;
+register STR **sarg;
 {
     ARRAY *savearray;
     STR *str;

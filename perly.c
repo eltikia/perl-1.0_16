@@ -194,8 +194,11 @@ register char **env;
 	str_set(STAB_STR(tmpstab),filename);
     }
 
-    (tmpstab = stabent("$",allstabs)) &&
+    tmpstab = stabent("$",allstabs);
+
+    if (tmpstab) {
 	str_numset(STAB_STR(tmpstab),(double)getpid());
+    }
 
     tmpstab = stabent("stdin",TRUE);
     tmpstab->stab_io = stio_new();

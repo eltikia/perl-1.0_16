@@ -114,6 +114,7 @@ register ARRAY *ar;
     return retval;
 }
 
+void
 aunshift(ar,num)
 register ARRAY *ar;
 register int num;

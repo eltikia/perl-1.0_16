@@ -50,6 +50,7 @@ register char *s;
     }
 }
 
+void
 str_numset(str,num)
 register STR *str;
 double num;

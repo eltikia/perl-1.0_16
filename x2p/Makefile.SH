@@ -12,21 +12,34 @@ esac
 case "$0" in
 */*) cd `expr X$0 : 'X\(.*\)/'` ;;
 esac
-case "$mallocsrc" in
-'') ;;
-*) mallocsrc="../$mallocsrc";;
+
+case "$d_symlink" in
+*define*) sln='ln -s' ;;
+*) sln='ln';;
 esac
-echo "Extracting x2p/Makefile (with variable substitutions)"
+
+echo "Extracting Makefile (with variable substitutions)"
 cat >Makefile <<!GROK!THIS!
-# $Header: Makefile.SH,v 1.0.1.1 88/01/26 14:15:24 root Exp $
+# $Header: Makefile.SH,v 1.0.1.5 88/02/02 11:20:49 root Exp $
 #
 # $Log:	Makefile.SH,v $
-# Revision 1.0.1.1  88/01/26  14:15:24  root
+# Revision 1.0.1.5  88/02/02  11:20:49  root
+# patch13: added d_symlink dependency, changed TEST to ./perl TEST.
+# 
+# Revision 1.0.1.4  88/01/28  10:17:59  root
+# patch8: added perldb.man
+# 
+# Revision 1.0.1.3  88/01/26  14:14:52  root
 # Added mallocsrc stuff.
 # 
-# Revision 1.0  87/12/18  17:50:17  root
-# Initial revision
+# Revision 1.0.1.2  88/01/26  08:46:04  root
+# patch 4: make depend didn't work right if . wasn't in PATH.
 # 
+# Revision 1.0.1.1  88/01/24  03:55:18  root
+# patch 2: remove extra Log lines.
+# 
+# Revision 1.0  87/12/18  16:11:50  root
+# Initial revision
 # 
 
 CC = $cc
@@ -40,27 +53,37 @@ SMALL = $small
 LARGE = $large $split
 mallocsrc = $mallocsrc
 mallocobj = $mallocobj
+SLN = $sln
 
-libs = $libnm -lm
+libs = $libs $cryptlib $libnm -lm
 !GROK!THIS!
 
 cat >>Makefile <<'!NO!SUBS!'
 
-public = a2p s2p
+public = perl perldb
 
 private = 
 
-manpages = a2p.man s2p.man
+manpages = perl.man perldb.man
 
 util =
 
 sh = Makefile.SH makedepend.SH
 
-h = EXTERN.h INTERN.h config.h handy.h hash.h a2p.h str.h util.h
+h1 = EXTERN.h INTERN.h arg.h array.h cmd.h config.h form.h handy.h
+h2 = hash.h perl.h search.h spat.h stab.h str.h util.h
 
-c = hash.c $(mallocsrc) str.c util.c walk.c
+h = $(h1) $(h2)
 
-obj = hash.o $(mallocobj) str.o util.o walk.o
+c1 = arg.c array.c cmd.c dump.c form.c hash.c $(mallocsrc)
+c2 = search.c stab.c str.c util.c version.c
+
+c = $(c1) $(c2)
+
+obj1 = arg.o array.o cmd.o dump.o form.o hash.o $(mallocobj)
+obj2 = search.o stab.o str.o util.o version.o
+
+obj = $(obj1) $(obj2)
 
 lintflags = -phbvxac
 
@@ -75,31 +98,35 @@ SHELL = /bin/sh
 all: $(public) $(private) $(util)
 	touch all
 
-a2p: $(obj) a2p.o
-	$(CC) $(LDFLAGS) $(LARGE) $(obj) a2p.o $(libs) -o a2p
+perl: $(obj) perl.o
+	$(CC) $(LDFLAGS) $(LARGE) $(obj) perl.o $(libs) -o perl
 
-a2p.c: a2p.y
-	@ echo Expect 107 shift/reduce errors...
-	yacc a2p.y
-	mv y.tab.c a2p.c
+perl.c: perl.y
+	@ echo Expect 2 shift/reduce errors...
+	yacc perl.y
+	mv y.tab.c perl.c
 
-a2p.o: a2p.c a2py.c a2p.h EXTERN.h util.h INTERN.h handy.h
-	$(CC) -c $(CFLAGS) $(LARGE) a2p.c
+perl.o: perl.c perly.c perl.h EXTERN.h search.h util.h INTERN.h handy.h
+	$(CC) -c $(CFLAGS) $(LARGE) perl.c
 
 # if a .h file depends on another .h file...
 $(h):
 	touch $@
-install: a2p s2p
+
+perl.man: perl.man.1 perl.man.2
+	cat perl.man.1 perl.man.2 >perl.man
+
+install: perl perl.man
 # won't work with csh
 	export PATH || exit 1
-	- mv $(bin)/a2p $(bin)/a2p.old
-	- mv $(bin)/s2p $(bin)/s2p.old
+	- mv $(bin)/perl $(bin)/perl.old
 	- if test `pwd` != $(bin); then cp $(public) $(bin); fi
 	cd $(bin); \
 for pub in $(public); do \
 chmod 755 `basename $$pub`; \
 done
-	- test $(bin) = /bin || rm -f /bin/a2p
+	- test $(bin) = /bin || rm -f /bin/perl
+	- test $(bin) = /bin || ln -s $(bin)/perl /bin || cp $(bin)/perl /bin
 #	chmod 755 makedir
 #	- makedir `filexp $(lib)`
 #	- \
@@ -120,7 +147,7 @@ clean:
 	rm -f *.o
 
 realclean:
-	rm -f a2p *.orig */*.orig *.o core $(addedbyconf)
+	rm -f perl *.orig */*.orig *.o core $(addedbyconf)
 
 # The following lint has practically everything turned on.  Unfortunately,
 # you have to wade through a lot of mumbo jumbo that can't be suppressed.
@@ -128,10 +155,14 @@ realclean:
 # for that spot.
 
 lint:
-	lint $(lintflags) $(defs) $(c) > a2p.fuzz
+	lint $(lintflags) $(defs) $(c) > perl.fuzz
 
-depend: ../makedepend
-	../makedepend
+depend: makedepend
+	./makedepend
+
+test: perl
+	chmod 755 t/TEST t/base.* t/comp.* t/cmd.* t/io.* t/op.*
+	cd t && (rm -f perl; $(SLN) ../perl .) && ./perl TEST
 
 clist:
 	echo $(c) | tr ' ' '\012' >.clist

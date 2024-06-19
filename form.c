@@ -23,6 +23,7 @@ if (d - orec->o_str + (allow) >= curlen) { \
     curlen = orec->o_len - 2; \
 }
 
+void
 format(orec,fcmd)
 register struct outrec *orec;
 register FCMD *fcmd;

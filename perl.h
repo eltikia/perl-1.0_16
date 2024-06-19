@@ -126,15 +126,6 @@ void freearg();
 EXT int line INIT(0);
 EXT int arybase INIT(0);
 
-struct outrec {
-    int o_lines;
-    char *o_str;
-    int o_len;
-};
-
-EXT struct outrec outrec;
-EXT struct outrec toprec;
-
 EXT STAB *last_in_stab INIT(Nullstab);
 EXT STAB *defstab INIT(Nullstab);
 EXT STAB *argvstab INIT(Nullstab);

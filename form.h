@@ -38,4 +38,5 @@ EXT struct outrec outrec;
 EXT struct outrec toprec;
 
 void format(register struct outrec *, register FCMD *);
+void do_write(struct outrec *, register STIO *);
 

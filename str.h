@@ -40,4 +40,5 @@ void str_sset(STR *, register STR *);
 void str_set(register STR *, register char *);
 void str_numset(register STR *, double);
 void str_inc(register STR *);
+void str_dec(register STR *);
 

@@ -1600,7 +1600,7 @@ STR ***retary;		/* where to return an array to, null if nowhere */
     case O_OR:
 	if (str_true(sarg[1])) {
 	    if (assigning) {
-		str_set(str, sarg[1]);
+		str_set(str, str_get(sarg[1]));
 		STABSET(str);
 	    }
 	    else

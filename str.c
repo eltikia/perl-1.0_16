@@ -15,6 +15,7 @@
 #include "util.h"
 #include "perl.h"
 
+void
 str_reset(s)
 register char *s;
 {

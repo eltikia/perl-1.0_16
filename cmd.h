@@ -125,4 +125,5 @@ void opt_arg();
 void evalstatic();
 STR *cmd_exec();
 void deb(char *pat, ...);
+short copyopt(register CMD *, register CMD *);
 

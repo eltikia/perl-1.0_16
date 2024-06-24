@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <sys/wait.h>
 #include "handy.h"
 #include "EXTERN.h"
 #include "search.h"
@@ -2161,7 +2162,7 @@ freeargs:
 	    *retary = sarg;	/* up to them to free it */
 	}
 	else
-	    safefree(sarg);
+	    safefree((char *)sarg);
     }
     return str;
 

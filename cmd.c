@@ -449,6 +449,7 @@ void deb(char *pat, ...)
 }
 #endif
 
+short
 copyopt(cmd,which)
 register CMD *cmd;
 register CMD *which;

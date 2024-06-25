@@ -13,6 +13,44 @@
 #include "search.h"
 #include "perl.h"
 
+void
+hsplit(tb)
+HASH *tb;
+{
+    int oldsize = tb->tbl_max + 1;
+    register int newsize = oldsize * 2;
+    register int i;
+    register HENT **a;
+    register HENT **b;
+    register HENT *entry;
+    register HENT **oentry;
+
+    a = (HENT**) saferealloc((char*)tb->tbl_array, newsize * sizeof(HENT*));
+    bzero((char*)&a[oldsize], oldsize * sizeof(HENT*)); /* zero second half */
+    tb->tbl_max = --newsize;
+    tb->tbl_array = a;
+
+    for (i=0; i<oldsize; i++,a++) {
+        if (!*a)                                /* non-existent */
+            continue;
+        b = a+oldsize;
+        for (oentry = a, entry = *a; entry; entry = *oentry) {
+            if ((entry->hent_hash & newsize) != i) {
+                *oentry = entry->hent_next;
+                entry->hent_next = *b;
+                if (!*b)
+                    tb->tbl_fill++;
+                *b = entry;
+                continue;
+            }
+            else
+                oentry = &entry->hent_next;
+        }
+        if (!*a)                                /* everything moved */
+            tb->tbl_fill--;
+    }
+}
+
 STR *
 hfetch(tb,key)
 register HASH *tb;
@@ -129,43 +167,6 @@ char *key;
     return FALSE;
 }
 #endif
-
-hsplit(tb)
-HASH *tb;
-{
-    int oldsize = tb->tbl_max + 1;
-    register int newsize = oldsize * 2;
-    register int i;
-    register HENT **a;
-    register HENT **b;
-    register HENT *entry;
-    register HENT **oentry;
-
-    a = (HENT**) saferealloc((char*)tb->tbl_array, newsize * sizeof(HENT*));
-    bzero((char*)&a[oldsize], oldsize * sizeof(HENT*)); /* zero second half */
-    tb->tbl_max = --newsize;
-    tb->tbl_array = a;
-
-    for (i=0; i<oldsize; i++,a++) {
-	if (!*a)				/* non-existent */
-	    continue;
-	b = a+oldsize;
-	for (oentry = a, entry = *a; entry; entry = *oentry) {
-	    if ((entry->hent_hash & newsize) != i) {
-		*oentry = entry->hent_next;
-		entry->hent_next = *b;
-		if (!*b)
-		    tb->tbl_fill++;
-		*b = entry;
-		continue;
-	    }
-	    else
-		oentry = &entry->hent_next;
-	}
-	if (!*a)				/* everything moved */
-	    tb->tbl_fill--;
-    }
-}
 
 HASH *
 hnew()

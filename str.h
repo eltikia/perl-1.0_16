@@ -43,4 +43,5 @@ void str_inc(register STR *);
 void str_dec(register STR *);
 void str_reset(register char *);
 void str_grow(register STR *, int);
+void str_chop(register STR *, register char *);
 

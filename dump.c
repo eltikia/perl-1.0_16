@@ -16,6 +16,22 @@
 #ifdef DEBUGGING
 static int dumplvl = 0;
 
+void dump_stab(register STAB *);
+void dump_spat(register SPAT *);
+void dump_arg(register ARG *);
+
+void
+dump(arg1,arg2,arg3,arg4,arg5)
+char *arg1, *arg2, *arg3, *arg4, *arg5;
+{
+    int i;
+
+    for (i = dumplvl*4; i; i--)
+	putc(' ',stderr);
+    fprintf(stderr,arg1, arg2, arg3, arg4, arg5);
+}
+
+void
 dump_cmd(cmd,alt)
 register CMD *cmd;
 register CMD *alt;
@@ -109,6 +125,7 @@ register CMD *alt;
     }
 }
 
+void
 dump_arg(arg)
 register ARG *arg;
 {
@@ -175,6 +192,7 @@ register ARG *arg;
     dump("}\n");
 }
 
+void
 dump_stab(stab)
 register STAB *stab;
 {
@@ -185,6 +203,7 @@ register STAB *stab;
     dump("}\n");
 }
 
+void
 dump_spat(spat)
 register SPAT *spat;
 {
@@ -210,15 +229,6 @@ register SPAT *spat;
     dump("}\n");
 }
 
-dump(arg1,arg2,arg3,arg4,arg5)
-char *arg1, *arg2, *arg3, *arg4, *arg5;
-{
-    int i;
-
-    for (i = dumplvl*4; i; i--)
-	putc(' ',stderr);
-    fprintf(stderr,arg1, arg2, arg3, arg4, arg5);
-}
 #endif
 
 #ifdef DEBUG

@@ -16,7 +16,7 @@
 #include "util.h"
 #include "perl.h"
 
-static STR str_chop;
+static STR str_chop_var;
 
 /* This is the main command loop.  We try to spend as much time in this loop
  * as possible, so lots of optimizations do their activities in here.  This
@@ -272,11 +272,11 @@ until_loop:
 	    match = (retstr->str_cur != 0);
 	    tmps = str_get(retstr);
 	    tmps += retstr->str_cur - match;
-	    str_set(&str_chop,tmps);
+	    str_set(&str_chop_var,tmps);
 	    *tmps = '\0';
 	    retstr->str_nok = 0;
 	    retstr->str_cur = tmps - retstr->str_ptr;
-	    retstr = &str_chop;
+	    retstr = &str_chop_var;
 	    goto flipmaybe;
 	}
 

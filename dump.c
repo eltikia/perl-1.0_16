@@ -98,7 +98,7 @@ register CMD *alt;
 	case C_EXPR:
 	    if (cmd->ucmd.acmd.ac_stab) {
 		dump("AC_STAB = ");
-		dump_arg(cmd->ucmd.acmd.ac_stab);
+		dump_stab(cmd->ucmd.acmd.ac_stab);
 	    } else
 		dump("AC_STAB = NULL\n");
 	    if (cmd->ucmd.acmd.ac_expr) {

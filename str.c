@@ -149,6 +149,7 @@ register char *ptr;
     str->str_pok = 1;		/* validate pointer */
 }
 
+void
 str_chop(str,ptr)	/* like set but assuming ptr is in str */
 register STR *str;
 register char *ptr;

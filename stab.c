@@ -70,6 +70,18 @@ static char *sig_name[] = {
     ,0
     };
 
+int
+whichsig(signame)
+char *signame;
+{
+    register char **sigv;
+
+    for (sigv = sig_name+1; *sigv; sigv++)
+	if (strEQ(signame,*sigv))
+	    return sigv - sig_name;
+    return 0;
+}
+
 STR *
 stab_str(stab)
 STAB *stab;
@@ -269,17 +281,6 @@ STR *str;
 	safefree(signame);
 	signame = Nullch;
     }
-}
-
-whichsig(signame)
-char *signame;
-{
-    register char **sigv;
-
-    for (sigv = sig_name+1; *sigv; sigv++)
-	if (strEQ(signame,*sigv))
-	    return sigv - sig_name;
-    return 0;
 }
 
 sighandler(sig)

@@ -177,13 +177,31 @@ STAB *stab;
 }
 
 void
+sighandler(sig)
+int sig;
+{
+    STAB *stab;
+    ARRAY *savearray;
+    STR *str;
+
+    stab = stabent(str_get(hfetch(sigstab->stab_hash,sig_name[sig])),TRUE);
+    savearray = defstab->stab_array;
+    defstab->stab_array = anew();
+    str = str_new(0);
+    str_set(str,sig_name[sig]);
+    apush(defstab->stab_array,str);
+    str = cmd_exec(stab->stab_sub);
+    afree(defstab->stab_array);  /* put back old $_[] */
+    defstab->stab_array = savearray;
+}
+
+void
 stabset(stab,str)
 register STAB *stab;
 STR *str;
 {
     char *s;
     int i;
-    int sighandler();
 
     if (stab->stab_flags & SF_VMAGIC) {
 	switch (stab->stab_name[0]) {
@@ -281,24 +299,6 @@ STR *str;
 	safefree(signame);
 	signame = Nullch;
     }
-}
-
-sighandler(sig)
-int sig;
-{
-    STAB *stab;
-    ARRAY *savearray;
-    STR *str;
-
-    stab = stabent(str_get(hfetch(sigstab->stab_hash,sig_name[sig])),TRUE);
-    savearray = defstab->stab_array;
-    defstab->stab_array = anew();
-    str = str_new(0);
-    str_set(str,sig_name[sig]);
-    apush(defstab->stab_array,str);
-    str = cmd_exec(stab->stab_sub);
-    afree(defstab->stab_array);  /* put back old $_[] */
-    defstab->stab_array = savearray;
 }
 
 char *

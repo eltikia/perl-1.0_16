@@ -11,6 +11,7 @@
 
 /* Print out the version number. */
 
+void
 version()
 {
     extern char rcsid[];

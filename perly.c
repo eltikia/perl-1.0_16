@@ -29,6 +29,7 @@ char *e_tmpname = "/tmp/perl-eXXXXXX";
 FILE *e_fp = Nullfp;
 ARG *l();
 
+int
 main(argc,argv,env)
 register int argc;
 register char **argv;
@@ -233,6 +234,7 @@ register char **env;
     if (goto_targ)
 	fatal("Can't find label \"%s\"--aborting.\n",goto_targ);
     exit(0);
+    return 0;
 }
 
 magicalize(list)

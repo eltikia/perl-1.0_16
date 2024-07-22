@@ -317,3 +317,5 @@ bool do_seek();
 int do_tms();
 int do_time();
 int do_stat();
+void init_eval();
+

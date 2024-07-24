@@ -29,6 +29,8 @@ char *e_tmpname = "/tmp/perl-eXXXXXX";
 FILE *e_fp = Nullfp;
 ARG *l();
 
+void magicalize(register char *);
+
 int
 main(argc,argv,env)
 register int argc;
@@ -237,6 +239,7 @@ register char **env;
     return 0;
 }
 
+void
 magicalize(list)
 register char *list;
 {

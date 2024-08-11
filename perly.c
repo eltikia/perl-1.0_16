@@ -267,6 +267,7 @@ register char *list;
 #define FUN3(f) return (yylval.ival = f,expectterm = FALSE,bufptr = s,FUNC3)
 #define SFUN(f) return (yylval.ival = f,expectterm = FALSE,bufptr = s,STABFUN)
 
+int
 yylex()
 {
     register char *s = bufptr;

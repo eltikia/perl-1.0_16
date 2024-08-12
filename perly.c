@@ -1386,9 +1386,7 @@ int fliporflop;
 }
 
 ARG *
-mod_match(type,left,pat)
-register ARG *left;
-register ARG *pat;
+mod_match(int type, register ARG *left, register ARG *pat)
 {
 
     register SPAT *spat;

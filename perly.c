@@ -31,6 +31,8 @@ FILE *e_fp = Nullfp;
 ARG *l();
 
 void magicalize(register char *);
+void cmd_free(register CMD *cmd);
+void spat_free(register SPAT *spat);
 
 int
 main(argc,argv,env)
@@ -1498,6 +1500,7 @@ register CMD *cmd;
     return cmd;
 }
 
+void
 yyerror(s)
 char *s;
 {
@@ -2162,6 +2165,8 @@ register ARG *arg;
 
 ARG *
 addflags(i,flags,arg)
+register int i;
+register int flags;
 register ARG *arg;
 {
     arg[i].arg_flags |= flags;
@@ -2537,6 +2542,7 @@ STR *str;
     return str;
 }
 
+void
 cmd_free(cmd)
 register CMD *cmd;
 {
@@ -2559,7 +2565,7 @@ register CMD *cmd;
 	    if (cmd->ucmd.ccmd.cc_true)
 		cmd_free(cmd->ucmd.ccmd.cc_true);
 	    if (cmd->c_type == C_IF && cmd->ucmd.ccmd.cc_alt)
-		cmd_free(cmd->ucmd.ccmd.cc_alt,Nullcmd);
+		cmd_free(cmd->ucmd.ccmd.cc_alt);
 	    break;
 	case C_EXPR:
 	    if (cmd->ucmd.acmd.ac_stab)
@@ -2613,6 +2619,7 @@ register ARG *arg;
     free_arg(arg);
 }
 
+void
 spat_free(spat)
 register SPAT *spat;
 {
